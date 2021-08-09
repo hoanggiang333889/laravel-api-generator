@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Http\Repositorys;
+
+use App\Models\{{modelName}};
+
+class {{modelName}}Repository extends BaseRepository
+{
+
+}

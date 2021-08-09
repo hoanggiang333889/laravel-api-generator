@@ -7,8 +7,6 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\{{modelNameSpace}};
-use App\Http\Resources\{{modelName}}Resource;
-use App\Http\Resources\{{modelName}}Collection;
 
 class {{modelName}}Controller extends Controller
 {
@@ -20,31 +18,29 @@ class {{modelName}}Controller extends Controller
      */
     public function index(Request $request)
     {
-        return new {{modelName}}Collection({{modelName}}::all());
+        return {{modelName}}::all();
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return {{modelName}}Resource
      */
     public function store(Request $request)
     {
         $requestData = $request->all();
         ${{modelNameCamel}} = {{modelName}}::create($requestData);
-        return (new {{modelName}}Resource(${{modelNameCamel}}))->setMessage('Created!');
+        return ${{modelNameCamel}});
     }
 
     /**
      * Display the specified resource.
      *
      * @param {{modelName}} ${{modelNameCamel}}
-     * @return {{modelName}}Resource
      */
     public function show({{modelName}} ${{modelNameCamel}})
     {
-        return new {{modelName}}Resource(${{modelNameCamel}});
+        return ${{modelNameCamel}};
     }
 
     /**
@@ -52,13 +48,12 @@ class {{modelName}}Controller extends Controller
      *
      * @param Request $request
      * @param {{modelName}} ${{modelNameCamel}}
-     * @return {{modelName}}Resource
      */
     public function update(Request $request, {{modelName}} ${{modelNameCamel}})
     {
         $requestData = $request->all();
         ${{modelNameCamel}}->update($requestData);
-        return (new {{modelName}}Resource(${{modelNameCamel}}))->setMessage('Updated!');
+        return ${{modelNameCamel}}));
     }
 
     /**

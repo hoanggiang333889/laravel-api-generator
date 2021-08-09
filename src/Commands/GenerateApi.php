@@ -12,7 +12,7 @@ class GenerateApi extends Command
      *
      * @var string
      */
-    protected $signature = 'api:generate {--model=}';
+    protected $signature = 'api:generate {--model=} {--module=}';
     /**
      * The console command description.
      *
@@ -47,7 +47,7 @@ class GenerateApi extends Command
             return false;
         }
 
-        $api = new LaravelApiGenerator($this->option('model'));
+        $api = new LaravelApiGenerator($this->option('model'), $this->option('module'));
         $controller = $api->generateController();
         if ($controller) {
             $this->info('Controller Generated SuccessFully!');
@@ -55,18 +55,11 @@ class GenerateApi extends Command
             $this->error('Controller Already Exists!');
         }
 
-        $resource = $api->generateResource();
-        if ($resource) {
-            $this->info('Resource Generated SuccessFully!');
+        $Repository = $api->generateRepositorie();
+        if ($Repository) {
+            $this->info('Repository Generated SuccessFully!');
         } else {
-            $this->error('Resource Already Exists!');
-        }
-
-        $collection = $api->generateCollection();
-        if ($collection) {
-            $this->info('Collection Generated SuccessFully!');
-        } else {
-            $this->error('Collection Already Exists!');
+            $this->error('Repository Already Exists!');
         }
 
         $route = $api->generateRoute();
