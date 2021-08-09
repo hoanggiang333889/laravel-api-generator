@@ -69,7 +69,6 @@ class LaravelApiGenerator
     {
         $this->result = false;
         $nameSpace = "\nuse App\Http\Controllers\Api\'.$this->module ? $this->module : $this->model.'\{{modelName}}Controller";
-        $template = "Route::apiResource('{{modelNameLower}}', {{modelName}}Controller::class);\n";
         $template = "Route::group(['prefix' => '".$this->module ? $this->module : $this->model."'/{{modelName}}, 'namespace' => 'Api\'".$this->module ? $this->module : $this->model."'], function(){";
         $template += "   Route::get('list', '{{modelName}}Controller@index');";
         $template += "   Route::post('create', '{{modelName}}Controller@create');";
@@ -77,7 +76,7 @@ class LaravelApiGenerator
         $template += "   Route::post('update', '{{modelName}}Controller@update');";
         $template += "   Route::post('update-status', '{{modelName}}Controller@update_status');";
         $template += "   Route::post('delete', '{{modelName}}Controller@remove');";
-        $template += "});";
+        $template += "});\n";
         $nameSpace = str_replace('{{modelName}}', $this->model, $nameSpace);
         $route = str_replace('{{modelNameLower}}', Str::camel(Str::plural($this->model)), $template);
         $route = str_replace('{{modelName}}', $this->model, $route);
