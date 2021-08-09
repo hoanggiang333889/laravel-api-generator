@@ -1,0 +1,60 @@
+{
+    "name": "giangmv/laravel-api-generator",
+    "description": "a laravel rest api generator with API Resources",
+    "keywords": [
+        "hoanggiang333889",
+        "laravel-api-generator",
+        "laravel-api-resources",
+        "api generator"
+    ],
+    "homepage": "https://github.com/hoanggiang333889/laravel-api-generator",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "hoanggiang333889",
+            "email": "hoanggiang333889@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "hoanggiang33889",
+            "email": "hoanggiang33889@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2|^8.0",
+        "illuminate/support": "5.8.*|^6.0|^7.0|^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.8.*",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Giangmv\\LaravelApiGenerator\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Giangmv\\LaravelApiGenerator\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Giangmv\\LaravelApiGenerator\\LaravelApiGeneratorServiceProvider"
+            ],
+            "aliases": {
+                "LaravelApiGenerator": "Giangmv\\LaravelApiGenerator\\LaravelApiGeneratorFacade"
+            }
+        }
+    }
+}
