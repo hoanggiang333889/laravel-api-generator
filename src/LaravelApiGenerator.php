@@ -69,9 +69,9 @@ class LaravelApiGenerator
     {
         $this->result = false;
         $nameSpace = "\nuse App\Http\Controllers\Api\'.$this->module ? $this->module : $this->model.'\{{modelName}}Controller";
-        $template = "Route::group(['prefix' => '".$this->module ? $this->module : $this->model."'/{{modelName}}, 'namespace' => 'Api\'".$this->module ? $this->module : $this->model."'], function(){";
-        $template += "   Route::get('list', '{{modelName}}Controller@index');";
-        $template += "   Route::post('create', '{{modelName}}Controller@create');";
+        $template = "Route::group([`prefix` => `".$this->module ? $this->module : $this->model."`/{{modelName}}, `namespace` => `Api\`".$this->module ? $this->module : $this->model."`], function(){";
+        $template += "   Route::get(`list`, `{{modelName}}Controller@index`);";
+        $template += "   Route::post(`create`, `{{modelName}}Controller@create`);";
         $template += "   Route::post('show', '{{modelName}}Controller@show');";
         $template += "   Route::post('update', '{{modelName}}Controller@update');";
         $template += "   Route::post('update-status', '{{modelName}}Controller@update_status');";
