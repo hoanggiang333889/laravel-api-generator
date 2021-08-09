@@ -1,6 +1,6 @@
 <?php
 
-namespace Bhavingajjar\LaravelApiGenerator\Tests;
+namespace Giangmv\LaravelApiGenerator\Tests;
 
 use PHPUnit\Framework\TestCase;
 

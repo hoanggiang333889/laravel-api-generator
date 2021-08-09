@@ -1,6 +1,6 @@
 <?php
 
-namespace Bhavingajjar\LaravelApiGenerator\Middleware;
+namespace Giangmv\LaravelApiGenerator\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Config;
