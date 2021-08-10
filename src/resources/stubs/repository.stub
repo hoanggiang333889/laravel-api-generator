@@ -2,7 +2,7 @@
 
 namespace App\Http\Repositorys;
 
-use Fomvasss\Repository\Eloquent\BaseRepository;
+use Giangmv\Repository\Eloquent\BaseRepository;
 use App\Models\{{modelName}};
 
 class {{modelName}}Repository extends BaseRepository
