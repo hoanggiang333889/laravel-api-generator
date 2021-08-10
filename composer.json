@@ -51,7 +51,7 @@
         "laravel": {
             "providers": [
                 "Giangmv\\LaravelApiGenerator\\LaravelApiGeneratorServiceProvider",
-                "Giangmv\\Repository\\Providers\\RepositoryServiceProvider"
+                "Giangmv\\Providers\\RepositoryServiceProvider"
             ],
             "aliases": {
                 "LaravelApiGenerator": "Giangmv\\LaravelApiGenerator\\LaravelApiGeneratorFacade"

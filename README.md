@@ -19,7 +19,7 @@ composer require Giangmv/laravel-api-generator
 ## Publish Configuration File
 
 ```bash
-php artisan vendor:publish --provider="Giangmv\Repository\Providers\RepositoryServiceProvider" --tag="repository-config"
+php artisan vendor:publish --provider="Giangmv\Providers\RepositoryServiceProvider" --tag="repository-config"
 
 php artisan vendor:publish --provider="Giangmv\LaravelApiGenerator\LaravelApiGeneratorServiceProvider" --tag="config"
 

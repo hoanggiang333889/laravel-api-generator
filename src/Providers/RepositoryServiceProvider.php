@@ -1,6 +1,6 @@
 <?php
 
-namespace Giangmv\Repository\Providers;
+namespace Giangmv\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
