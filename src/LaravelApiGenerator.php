@@ -55,16 +55,16 @@ class LaravelApiGenerator
     public function generateRepositorie()
     {
         $this->result = false;
-        if (!file_exists(base_path("app/Http/Repositories/Api/".($this->module ? $this->module : null)))) {
-            mkdir(base_path("app/Http/Repositories/Api/".($this->module ? $this->module : null)));
+        if (!file_exists(base_path("app/Http/Repositories/".($this->module ? $this->module : null)))) {
+            mkdir(base_path("app/Http/Repositories/".($this->module ? $this->module : null)));
         }
-        if (! file_exists(base_path('app/Http/Repositories/Api/'.$this->module ? $this->module : $this->model.'/'.$this->model.'Repository.php'))) {
-            $template = self::getStubContents('controller.stub');
+        if (! file_exists(base_path('app/Http/Repositories/'.$this->module ? $this->module : $this->model.'/'.$this->model.'Repository.php'))) {
+            $template = self::getStubContents('Repositories.stub');
             $template = str_replace('{{modelName}}', $this->model, $template);
             $template = str_replace('{{modelNameLower}}', strtolower($this->model), $template);
             $template = str_replace('{{modelNameCamel}}', Str::camel($this->model), $template);
             $template = str_replace('{{modelNameSpace}}', is_dir(base_path('app/Models')) ? 'Models\\'.$this->model : $this->model, $template);
-            file_put_contents(base_path('app/Http/Repositories/Api/'.($this->module ? $this->module : $this->model).'/'.$this->model.'Repository.php'), $template);
+            file_put_contents(base_path('app/Http/Repositories/'.($this->module ? $this->module : $this->model).'/'.$this->model.'Repository.php'), $template);
             $this->result = true;
         }
 
