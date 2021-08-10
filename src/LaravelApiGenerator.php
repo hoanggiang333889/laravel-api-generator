@@ -59,7 +59,7 @@ class LaravelApiGenerator
             mkdir(base_path("app/Http/Repositories/".($this->module ? $this->module : null)));
         }
         if (! file_exists(base_path('app/Http/Repositories/'.$this->module ? $this->module : $this->model.'/'.$this->model.'Repository.php'))) {
-            $template = self::getStubContents('Repositories.stub');
+            $template = self::getStubContents('repository.stub');
             $template = str_replace('{{modelName}}', $this->model, $template);
             $template = str_replace('{{modelNameLower}}', strtolower($this->model), $template);
             $template = str_replace('{{modelNameCamel}}', Str::camel($this->model), $template);
