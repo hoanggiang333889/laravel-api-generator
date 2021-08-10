@@ -19,6 +19,8 @@ composer require Giangmv/laravel-api-generator
 ## Publish Configuration File
 
 ```bash
+php artisan vendor:publish --provider="Giangmv\Repository\Providers\RepositoryServiceProvider" --tag="repository-config"
+
 php artisan vendor:publish --provider="Giangmv\LaravelApiGenerator\LaravelApiGeneratorServiceProvider" --tag="config"
 
 Next, if you plan for cross origin support, you should add middleware to your api middleware group within your app/Http/Kernel.php file:
@@ -34,7 +36,7 @@ API_JSON_RESPONSE = true
 ## Usage
 
 ``` php
-php artisan api:generate --model=User
+php artisan api:generate --model=User --module=Users
 ```
 
 ### Testing
