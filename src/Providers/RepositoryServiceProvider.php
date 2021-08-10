@@ -1,6 +1,6 @@
 <?php
 
-namespace Giangmv\Providers;
+namespace Giangmv\LaravelApiGenerator\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
