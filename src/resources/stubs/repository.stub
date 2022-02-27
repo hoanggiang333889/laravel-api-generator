@@ -1,25 +1,19 @@
-<?php
+@if($module)
+namespace App\Repositories\{{ str_replace("/","\\", $module)}};
+@else
+namespace App\Repositories;
+@endif
 
-namespace App\Http\Repositorys;
-
-use Giangmv\Repository\Eloquent\BaseRepository;
+use App\Repositories\BaseRepository;
 use App\Models\{{modelName}};
 
-class {{modelName}}Repository extends BaseRepository
+class {{ $modelNameCamel }}Repository extends BaseRepository
 {
-    public function model()
+    /**
+     * @return App\Models\{{ $modelNameCamel] }}
+     */
+    public function getmodel()
     {
-        return {{modelName}}::class;
-    }
-
-    public function list($data) {
-        $result = $this->scopes(['sortable', ['id'=>'desc']], 'searchable')
-        ->get();
-        return $result;
-    }
-
-    public function show($data) {
-        $result = $this->find($data['id']);
-        return $result;
+        return {{ $modelNameCamel }}::class;
     }
 }
