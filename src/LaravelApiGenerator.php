@@ -9,12 +9,14 @@ class LaravelApiGenerator
     const STUB_DIR = __DIR__.'/resources/stubs/';
     protected $model;
     protected $module;
+    protected $table;
     protected $result = false;
 
-    public function __construct(string $model, string $module)
+    public function __construct(string $model, string $module, string $table)
     {
         $this->model = $model;
         $this->module = $module;
+        $this->table = $table;
         self::generate();
     }
 
@@ -28,8 +30,17 @@ class LaravelApiGenerator
         if (! file_exists(base_path('app/Http/Controllers/Api'))) {
             mkdir(base_path('app/Http/Controllers/Api'));
         }
-        if (! file_exists(base_path('app/Http/Repositories'))) {
-            mkdir(base_path('app/Http/Repositories'));
+        if (! file_exists(base_path('app/Repositories'))) {
+            mkdir(base_path('app/Repositories'));
+        }
+        if (! file_exists(base_path('app/Services'))) {
+            mkdir(base_path('app/Services'));
+        }
+        if (! file_exists(base_path('app/Http/Requests'))) {
+            mkdir(base_path('app/Http/Requests'));
+        }
+        if (! file_exists(base_path('app/Http/Resources'))) {
+            mkdir(base_path('app/Http/Resources'));
         }
     }
 
@@ -55,16 +66,133 @@ class LaravelApiGenerator
     public function generateRepositorie()
     {
         $this->result = false;
-        if (!file_exists(base_path("app/Http/Repositories/".($this->module ? $this->module : null)))) {
-            mkdir(base_path("app/Http/Repositories/".($this->module ? $this->module : null)));
+        if (!file_exists(base_path("app/Repositories/".($this->module ? $this->module : null)))) {
+            mkdir(base_path("app/Repositories/".($this->module ? $this->module : null)));
         }
-        if (! file_exists(base_path('app/Http/Repositories/'.$this->module ? $this->module : $this->model.'/'.$this->model.'Repository.php'))) {
+        if (! file_exists(base_path('app/Repositories/'.$this->module ? $this->module : $this->model.'/'.$this->model.'Repository.php'))) {
             $template = self::getStubContents('repository.stub');
             $template = str_replace('{{modelName}}', $this->model, $template);
             $template = str_replace('{{modelNameLower}}', strtolower($this->model), $template);
             $template = str_replace('{{modelNameCamel}}', Str::camel($this->model), $template);
             $template = str_replace('{{modelNameSpace}}', is_dir(base_path('app/Models')) ? 'Models\\'.$this->model : $this->model, $template);
-            file_put_contents(base_path('app/Http/Repositories/'.($this->module ? $this->module : $this->model).'/'.$this->model.'Repository.php'), $template);
+            file_put_contents(base_path('app/Repositories/'.($this->module ? $this->module : $this->model).'/'.$this->model.'Repository.php'), $template);
+            $this->result = true;
+        }
+
+        return $this->result;
+    }
+
+    public function generateService()
+    {
+        $this->result = false;
+        if (!file_exists(base_path("app/Services/".($this->module ? $this->module : null)))) {
+            mkdir(base_path("app/Services/".($this->module ? $this->module : null)));
+        }
+        if (! file_exists(base_path('app/Services/'.$this->module ? $this->module : $this->model.'/'.$this->model.'Service.php'))) {
+            $template = self::getStubContents('service.stub');
+            $template = str_replace('{{modelName}}', $this->model, $template);
+            $template = str_replace('{{modelNameLower}}', strtolower($this->model), $template);
+            $template = str_replace('{{modelNameCamel}}', Str::camel($this->model), $template);
+            $template = str_replace('{{modelNameSpace}}', is_dir(base_path('app/Models')) ? 'Models\\'.$this->model : $this->model, $template);
+            file_put_contents(base_path('app/Services/'.($this->module ? $this->module : $this->model).'/'.$this->model.'Service.php'), $template);
+            $this->result = true;
+        }
+
+        return $this->result;
+    }
+
+    public function generateResources()
+    {
+        $this->result = false;
+        if (!file_exists(base_path("app/Http/Resources/".($this->module ? $this->module : null)))) {
+            mkdir(base_path("app/Resources/".($this->module ? $this->module : null)));
+        }
+        if (! file_exists(base_path('app/Http/Resources/'.$this->module ? $this->module : $this->model.'/'.$this->model.'Resource.php'))) {
+            $template = self::getStubContents('resource.stub');
+            $template = str_replace('{{modelName}}', $this->model, $template);
+            $template = str_replace('{{modelNameLower}}', strtolower($this->model), $template);
+            $template = str_replace('{{modelNameCamel}}', Str::camel($this->model), $template);
+            $template = str_replace('{{modelNameSpace}}', is_dir(base_path('app/Models')) ? 'Models\\'.$this->model : $this->model, $template);
+            $this->table =  $this->model->plural()->snake();
+            $fields = [];
+            if (Schema::hasTable($this->table)) {
+                $this->info('Table "' . $this->table . '" already existed');
+                $fields = Schema::getColumnListing($this->table);
+                if (!count($fields)) {
+                    $this->error('No fields found');
+    
+                    return;
+                }
+            }
+    
+            $template = str_replace('{{fields}}', $fields, $template);
+            file_put_contents(base_path('app/Http/Resources/'.($this->module ? $this->module : $this->model).'/'.$this->model.'Resource.php'), $template);
+            $this->result = true;
+        }
+
+        return $this->result;
+    }
+
+    public function generateCreateRequest()
+    {
+        $this->result = false;
+        if (!file_exists(base_path("app/Http/Requests/Create".($this->module ? $this->module : null)))) {
+            mkdir(base_path("app/Http/Requests/Create".($this->module ? $this->module : null)));
+        }
+        if (! file_exists(base_path('app/Http/Requests/Create'.$this->module ? $this->module : $this->model.'/'.$this->model.'Request.php'))) {
+            $template = self::getStubContents('create_request.stub');
+            $template = str_replace('{{modelName}}', $this->model, $template);
+            $template = str_replace('{{modelNameLower}}', strtolower($this->model), $template);
+            $template = str_replace('{{modelNameCamel}}', Str::camel($this->model), $template);
+            $template = str_replace('{{modelNameSpace}}', is_dir(base_path('app/Models')) ? 'Models\\'.$this->model : $this->model, $template);
+            $this->table =  $this->model->plural()->snake();
+            $fields = [];
+            if (Schema::hasTable($this->table)) {
+                $this->info('Table "' . $this->table . '" already existed');
+                $fields = Schema::getColumnListing($this->table);
+                if (!count($fields)) {
+                    $this->error('No fields found');
+    
+                    return;
+                }
+            }
+    
+            $template = str_replace('{{fields}}', $fields, $template);
+            
+            file_put_contents(base_path('app/Http/Requests/Create'.($this->module ? $this->module : $this->model).'/'.$this->model.'Request.php'), $template);
+            $this->result = true;
+        }
+
+        return $this->result;
+    }
+
+    public function generateUpdateRequest()
+    {
+        $this->result = false;
+        if (!file_exists(base_path("app/Http/Requests/Update".($this->module ? $this->module : null)))) {
+            mkdir(base_path("app/Http/Requests/Update".($this->module ? $this->module : null)));
+        }
+        if (! file_exists(base_path('app/Http/Requests/Create'.$this->module ? $this->module : $this->model.'/'.$this->model.'Request.php'))) {
+            $template = self::getStubContents('update_request.stub');
+            $template = str_replace('{{modelName}}', $this->model, $template);
+            $template = str_replace('{{modelNameLower}}', strtolower($this->model), $template);
+            $template = str_replace('{{modelNameCamel}}', Str::camel($this->model), $template);
+            $template = str_replace('{{modelNameSpace}}', is_dir(base_path('app/Models')) ? 'Models\\'.$this->model : $this->model, $template);
+            $this->table =  $this->model->plural()->snake();
+            $fields = [];
+            if (Schema::hasTable($this->table)) {
+                $this->info('Table "' . $this->table . '" already existed');
+                $fields = Schema::getColumnListing($this->table);
+                if (!count($fields)) {
+                    $this->error('No fields found');
+    
+                    return;
+                }
+            }
+    
+            $template = str_replace('{{fields}}', $fields, $template);
+            
+            file_put_contents(base_path('app/Http/Requests/Update'.($this->module ? $this->module : $this->model).'/'.$this->model.'Request.php'), $template);
             $this->result = true;
         }
 

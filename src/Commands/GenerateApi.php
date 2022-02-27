@@ -62,6 +62,31 @@ class GenerateApi extends Command
             $this->error('Repository Already Exists!');
         }
 
+        $service = $api->generateService();
+        if ($service) {
+            $this->info('service Generated SuccessFully!');
+        } else {
+            $this->error('service Already Exists!');
+        }
+        $resource = $api->generateResources();
+        if ($resource) {
+            $this->info('service Generated SuccessFully!');
+        } else {
+            $this->error('service Already Exists!');
+        }
+        $createRequest = $api->generateCreateRequest();
+        if ($createRequest) {
+            $this->info('createRequest Generated SuccessFully!');
+        } else {
+            $this->error('createRequest Already Exists!');
+        }
+        $generateUpdateRequest = $api->generateUpdateRequest();
+        if ($generateUpdateRequest) {
+            $this->info('generateUpdateRequest Generated SuccessFully!');
+        } else {
+            $this->error('generateUpdateRequest Already Exists!');
+        }
+
         $route = $api->generateRoute();
         if ($route) {
             $this->info('Route Generated SuccessFully!');
