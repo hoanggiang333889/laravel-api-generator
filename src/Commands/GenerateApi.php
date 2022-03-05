@@ -93,7 +93,14 @@ class GenerateApi extends Command
         } else {
             $this->error('Route Already Exists!');
         }
+        $model = $api->generateModel();
+        if ($model) {
+            $this->info('Model Generated SuccessFully');
+        } else {
+            $this->error('Model Already Exists!');
+        }
 
+        $this->info('-------------------------');
         $this->info('Api Created SuccessFully!');
 
         return true;

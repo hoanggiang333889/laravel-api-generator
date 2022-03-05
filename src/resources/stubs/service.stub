@@ -1,0 +1,29 @@
+<?php
+{{useTemplate}}
+use App\Services\BaseService;
+use App\Models\{{modelNameCamel}};
+{{useRepo}}
+class {{modelNameCamel}}Service extends BaseService
+{
+    /**
+    * @var App\Repositories\{{modelNameCamel}}Repository  {{modelName}}Repository.
+    */
+    protected ${{modelName}}Repository;
+
+    /**
+     * {{modelNameCamel}}Service construct
+     */
+    public function __construct({{modelNameCamel}}Repository ${{modelName}}Repository)
+    {
+        $this->{{modelName}}Repository = ${{modelName}}Repository;
+        parent::__construct();
+    }
+
+    /**
+     * @return App\Repositories\{{modelNameCamel}}Repository
+     */
+    public function getRepository()
+    {
+        return {{modelNameCamel}}Repository::class;
+    }
+}

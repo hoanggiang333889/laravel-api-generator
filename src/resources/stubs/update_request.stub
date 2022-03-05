@@ -1,12 +1,9 @@
-@if($module)
-namespace App\Http\Requests\{{ str_replace("/","\\", $module)}}\{{modelNameCamel}};
-@else
-namespace App\Http\Requests\{{modelNameCamel}};
-@endif
+<?php
+{{useTemplate}}
 
 use App\Http\Requests\FormRequest;
 
-class Update{{ modelNameCamel }}Request extends FormRequest
+class Update{{modelNameCamel}}Request extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,10 +12,6 @@ class Update{{ modelNameCamel }}Request extends FormRequest
      */
     public function rules()
     {
-        return [
-@foreach($fields as $field => $item)
-            '{{ $field }}' => 'required',
-@endforeach
-        ];
+        return {{fields}};
     }
 }

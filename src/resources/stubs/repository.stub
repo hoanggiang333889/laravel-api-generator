@@ -1,19 +1,15 @@
-@if($module)
-namespace App\Repositories\{{ str_replace("/","\\", $module)}};
-@else
-namespace App\Repositories;
-@endif
-
+<?php
+{{useTemplate}}
 use App\Repositories\BaseRepository;
 use App\Models\{{modelName}};
 
-class {{ $modelNameCamel }}Repository extends BaseRepository
+class {{modelNameCamel}}Repository extends BaseRepository
 {
     /**
-     * @return App\Models\{{ $modelNameCamel] }}
+     * @return App\Models\{{modelNameCamel}}
      */
     public function getmodel()
     {
-        return {{ $modelNameCamel }}::class;
+        return {{modelNameCamel}}::class;
     }
 }
