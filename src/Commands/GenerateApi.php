@@ -41,11 +41,11 @@ class GenerateApi extends Command
             return false;
         }
 
-        if (! file_exists(base_path(config('laravel-api-generator.model_directory_path').'/'.$this->option('model').'.php'))) {
-            $this->error('Model does not exist!');
+        // if (! file_exists(base_path(config('laravel-api-generator.model_directory_path').'/'.$this->option('model').'.php'))) {
+        //     $this->error('Model does not exist!');
 
-            return false;
-        }
+        //     return false;
+        // }
 
         $api = new LaravelApiGenerator($this->option('model'), $this->option('module'));
         $controller = $api->generateController();
@@ -93,7 +93,18 @@ class GenerateApi extends Command
         } else {
             $this->error('Route Already Exists!');
         }
+        $model = $api->generateModel();
+        if ($model === 1) {
+            $this->info('Model Generated SuccessFully');
+        } elseif ($model === 0) {
+            $this->error('Model Already Exists!');
+        } elseif ($model === 2) {
+            $this->error('Model not found!');
+        } elseif ($model === 3) {
+            $this->error('no field in table');
+        }
 
+        $this->info('-------------------------');
         $this->info('Api Created SuccessFully!');
 
         return true;

@@ -1,35 +1,20 @@
-@if($module)
-namespace App\Http\Controllers\Api\{{ str_replace("/","\\", $module)}};
-
-use App\Http\Requests\{{ str_replace("/","\\", $module)}}\Create{{ $modelNameCamel }}Request;
-use App\Http\Requests\{{ str_replace("/","\\", $module)}}\Update{{ $modelNameCamel }}Request;
-use App\Http\Resources\{{ str_replace("/","\\", $module)}}\{{ $modelNameCamel }}Resource;
-use App\Models\{{ $modelNameCamel }};
-use App\Services\{{ str_replace("/","\\", $module)}}\{{ $modelNameCamel }}Service;
-@else
-namespace App\Http\Controllers\Api;
-
-use App\Http\Requests\{{ $modelNameCamel }}\Create{{ $modelNameCamel }}Request;
-use App\Http\Requests\{{ $modelNameCamel }}\Update{{ $modelNameCamel }}Request;
-use App\Http\Resources\{{ $modelNameCamel }}Resource;
-use App\Models\{{ $modelNameCamel }};
-use App\Services\{{ $modelNameCamel }}Service;
-@endif
+<?php
+{{useTemplate}}
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 
-class {{ $modelNameCamel }}Controller extends Controller
+class {{modelName}}Controller extends Controller
 {
     /**
-     * @var App\Services\{{ $modelNameCamel }}Service {{ $modelName }}Service
+     * @var App\Services\{{modelNameCamel}}Service {{modelNameCamel}}Service
      */
-    protected ${{ $modelName }}Service;
+    protected ${{modelNameCamel}}Service;
 
-    public function __construct({{ $modelNameCamel }}Service ${{ $modelName }}Service)
+    public function __construct({{modelName}}Service ${{modelNameCamel}}Service)
     {
-        $this->{{ $modelName }}Service = ${{ $modelName }}Service;
+        $this->{{modelNameCamel}}Service = ${{modelNameCamel}}Service;
     }
 
     /**
@@ -42,8 +27,8 @@ class {{ $modelNameCamel }}Controller extends Controller
     public function index(Request $request)
     {
         $input = $request->all();
-        ${{ $model['PLURAL_CAMEL'] }} = $this->{{ $modelName }}Service->list($input);
-        $result = {{ $modelNameCamel }}Resource::collection(${{ $model['PLURAL_CAMEL'] }});
+        ${{modelNameLower}} = $this->{{modelNameCamel}}Service->list($input);
+        $result = {{modelName}}Resource::collection(${{modelNameLower}});
 
         return response()->success(self::INDEX, $result);
     }
@@ -51,21 +36,18 @@ class {{ $modelNameCamel }}Controller extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\{{ $modelNameCamel }}\Create{{ $modelNameCamel }}Request $request
+     * @param \App\Http\Requests\{{modelName}}\Create{{modelName}}Request $request
      * @return \Illuminate\Http\Response
      *
      * @param Request $request
      * @return Response
      *
      */
-    public function store(Create{{ $modelNameCamel }}Request $request, {{ $modelNameCamel }} ${{ $modelName }})
+    public function store(Create{{modelName}}Request $request)
     {
-        if (Gate::denies('modify', ${{ $modelName }})) {
-            return response()->error(self::INVALID_PERMISSIONS, self::STORE, 401);
-        }
         $input = $request->all();
-        ${{ $modelName }} = $this->{{ $modelName }}Service->create($input);
-        $result =  new {{ $modelNameCamel }}Resource(${{ $modelName }});
+        ${{modelNameCamel}} = $this->{{modelNameCamel}}Service->create($input);
+        $result =  new {{modelName}}Resource(${{modelNameCamel}});
 
         return response()->success(self::STORE, $result);
     }
@@ -73,17 +55,14 @@ class {{ $modelNameCamel }}Controller extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\{{ $modelNameCamel }}  ${{ $modelName }}
+     * @param \App\Models\{{modelName}}  ${{modelNameCamel}}
      * @return \Illuminate\Http\Response
      *
      */
-    public function show(Request $request, {{ $modelNameCamel }} ${{ $modelName }})
+    public function show(Request $request, {{modelName}} ${{modelNameCamel}})
     {
-        if (Gate::denies('modify', ${{ $modelName }})) {
-            return response()->error(self::INVALID_PERMISSIONS, self::SHOW, 401);
-        }
         $input = $request->all();
-        $result = new {{ $modelNameCamel }}Resource(${{ $modelName }});
+        $result = new {{modelName}}Resource(${{modelNameCamel}});
 
         return response()->success(self::SHOW, $result);
     }
@@ -91,19 +70,16 @@ class {{ $modelNameCamel }}Controller extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\{{ $modelNameCamel }}\Update{{ $modelNameCamel }}Request $request
-     * @param \App\Models\{{ $modelNameCamel }}  ${{ $modelName }}
+     * @param \App\Http\Requests\{{modelName}}\Update{{modelName}}Request $request
+     * @param \App\Models\{{modelName}}  ${{modelNameCamel}}
      * @return \Illuminate\Http\Response
      *
      */
-    public function update(Update{{ $modelNameCamel }}Request $request, {{ $modelNameCamel }} ${{ $modelName }})
+    public function update(Update{{modelName}}Request $request, {{modelName}} ${{modelNameCamel}})
     {
-        if (Gate::denies('modify', ${{ $modelName }})) {
-            return response()->error(self::INVALID_PERMISSIONS, self::UPDATE, 401);
-        }
         $input = $request->all();
-        $this->{{ $modelName }}Service->update(${{ $modelName }}, $input);
-        $result = new {{ $modelNameCamel }}Resource(${{ $modelName }});
+        $this->{{modelNameCamel}}Service->update(${{modelNameCamel}}, $input);
+        $result = new {{modelName}}Resource(${{modelNameCamel}});
 
         return response()->success(self::UPDATE, $result);
     }
@@ -111,16 +87,13 @@ class {{ $modelNameCamel }}Controller extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\{{ $modelNameCamel }}  ${{ $modelName }}
+     * @param \App\Models\{{modelName}}  ${{modelNameCamel}}
      * @return \Illuminate\Http\Response
      *
      */
-    public function destroy({{ $modelNameCamel }} ${{ $modelName }})
+    public function destroy({{modelName}} ${{modelNameCamel}})
     {
-        if (Gate::denies('modify', ${{ $modelName }})) {
-            return response()->error(self::INVALID_PERMISSIONS, self::REMOVE, 401);
-        }
-        $result = $this->{{ $modelName }}Service->destroy(${{ $modelName }});
+        $result = $this->{{modelNameCamel}}Service->destroy(${{modelNameCamel}});
 
         return response()->success(self::REMOVE, $result);
     }
