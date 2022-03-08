@@ -3,7 +3,7 @@
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class {{modelNameCamel}}Resource extends JsonResource
+class {{modelName}}Resource extends JsonResource
 {
     /**
      * Transform the resource into an array.

@@ -3,13 +3,13 @@
 use App\Repositories\BaseRepository;
 use App\Models\{{modelName}};
 
-class {{modelNameCamel}}Repository extends BaseRepository
+class {{modelName}}Repository extends BaseRepository
 {
     /**
-     * @return App\Models\{{modelNameCamel}}
+     * @return App\Models\{{modelName}}
      */
     public function getmodel()
     {
-        return {{modelNameCamel}}::class;
+        return {{modelName}}::class;
     }
 }

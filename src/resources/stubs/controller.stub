@@ -5,16 +5,16 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 
-class {{modelNameCamel}}Controller extends Controller
+class {{modelName}}Controller extends Controller
 {
     /**
-     * @var App\Services\{{modelNameCamel}}Service {{modelName}}Service
+     * @var App\Services\{{modelNameCamel}}Service {{modelNameCamel}}Service
      */
-    protected ${{modelName}}Service;
+    protected ${{modelNameCamel}}Service;
 
-    public function __construct({{modelNameCamel}}Service ${{modelName}}Service)
+    public function __construct({{modelName}}Service ${{modelNameCamel}}Service)
     {
-        $this->{{modelName}}Service = ${{modelName}}Service;
+        $this->{{modelNameCamel}}Service = ${{modelNameCamel}}Service;
     }
 
     /**
@@ -27,8 +27,8 @@ class {{modelNameCamel}}Controller extends Controller
     public function index(Request $request)
     {
         $input = $request->all();
-        ${{modelNameLower}} = $this->{{modelName}}Service->list($input);
-        $result = {{modelNameCamel}}Resource::collection(${{modelNameLower}});
+        ${{modelNameLower}} = $this->{{modelNameCamel}}Service->list($input);
+        $result = {{modelName}}Resource::collection(${{modelNameLower}});
 
         return response()->success(self::INDEX, $result);
     }
@@ -36,18 +36,18 @@ class {{modelNameCamel}}Controller extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\{{ $modelNameCamel }}\Create{{ $modelNameCamel }}Request $request
+     * @param \App\Http\Requests\{{modelName}}\Create{{modelName}}Request $request
      * @return \Illuminate\Http\Response
      *
      * @param Request $request
      * @return Response
      *
      */
-    public function store(Create{{modelNameCamel}}Request $request)
+    public function store(Create{{modelName}}Request $request)
     {
         $input = $request->all();
-        ${{modelName}} = $this->{{modelName}}Service->create($input);
-        $result =  new {{modelNameCamel}}Resource(${{modelName}});
+        ${{modelNameCamel}} = $this->{{modelNameCamel}}Service->create($input);
+        $result =  new {{modelName}}Resource(${{modelNameCamel}});
 
         return response()->success(self::STORE, $result);
     }
@@ -55,14 +55,14 @@ class {{modelNameCamel}}Controller extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\{{modelNameCamel}}  ${{$modelName}}
+     * @param \App\Models\{{modelName}}  ${{modelNameCamel}}
      * @return \Illuminate\Http\Response
      *
      */
-    public function show(Request $request, {{modelNameCamel}} ${{modelName}})
+    public function show(Request $request, {{modelName}} ${{modelNameCamel}})
     {
         $input = $request->all();
-        $result = new {{modelNameCamel}}Resource(${{modelName}});
+        $result = new {{modelName}}Resource(${{modelNameCamel}});
 
         return response()->success(self::SHOW, $result);
     }
@@ -70,16 +70,16 @@ class {{modelNameCamel}}Controller extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\{{modelNameCamel}}\Update{{modelNameCamel}}Request $request
-     * @param \App\Models\{{modelNameCamel}}  ${{modelName}}
+     * @param \App\Http\Requests\{{modelName}}\Update{{modelName}}Request $request
+     * @param \App\Models\{{modelName}}  ${{modelNameCamel}}
      * @return \Illuminate\Http\Response
      *
      */
-    public function update(Update{{modelNameCamel}}Request $request, {{modelNameCamel}} ${{modelName}})
+    public function update(Update{{modelName}}Request $request, {{modelName}} ${{modelNameCamel}})
     {
         $input = $request->all();
-        $this->{{modelName}}Service->update(${{modelName}}, $input);
-        $result = new {{modelNameCamel}}Resource(${{modelName}});
+        $this->{{modelNameCamel}}Service->update(${{modelNameCamel}}, $input);
+        $result = new {{modelName}}Resource(${{modelNameCamel}});
 
         return response()->success(self::UPDATE, $result);
     }
@@ -87,13 +87,13 @@ class {{modelNameCamel}}Controller extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\{{modelNameCamel}}  ${{modelName}}
+     * @param \App\Models\{{modelName}}  ${{modelNameCamel}}
      * @return \Illuminate\Http\Response
      *
      */
-    public function destroy({{modelNameCamel}} ${{modelName}})
+    public function destroy({{modelName}} ${{modelNameCamel}})
     {
-        $result = $this->{{modelName}}Service->destroy(${{modelName}});
+        $result = $this->{{modelNameCamel}}Service->destroy(${{modelNameCamel}});
 
         return response()->success(self::REMOVE, $result);
     }
